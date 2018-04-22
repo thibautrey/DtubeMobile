@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
-import { ListItem } from "react-native-material-ui";
-import { Feed } from "../api";
+import VideoListRow from "./VideoListRow";
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  renderRow = ({ item }) => {
+    const { navigator } = this.props;
+
+    return <VideoListRow {...item} navigator={navigator} />;
+  };
+
   render() {
+    const { renderRow } = this;
+    const { data } = this.props;
+
     return (
       <View style={styles.container}>
-        <FlatList>
-          <ListItem divider onPress={() => {}}>
-            <Text>Test</Text>
-          </ListItem>
-        </FlatList>
+        <FlatList
+          data={data}
+          horizontal={true}
+          keyExtractor={row => {
+            return (
+              (row.video ? row.video.info.permlink : row.links[0]) +
+              "." +
+              new Date().getTime()
+            );
+          }}
+          renderItem={renderRow}
+        />
       </View>
     );
   }

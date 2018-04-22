@@ -9,14 +9,14 @@
   "dependencies": {
     "assert": "^1.4.1",
     "crypto": "^1.0.1",
+    "dsteem": "^0.8.7",
     "events": "^2.0.0",
     "main": "^1.0.1",
     "promise": "^8.0.1",
     "react": "16.3.1",
     "react-native": "0.55.3",
     "react-native-material-ui": "^1.22.2",
-    "react-native-vector-icons": "^4.6.0",
-    "steem": "^0.7.1"
+    "react-native-vector-icons": "^4.6.0"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",

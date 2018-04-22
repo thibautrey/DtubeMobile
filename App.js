@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, UIManager } from "react-native";
-import { COLOR, ThemeProvider } from "react-native-material-ui";
-import { VideoList } from "./VideoList";
+import { Platform, StyleSheet, NavigatorIOS, UIManager } from "react-native";
+import { COLOR, ThemeProvider, Subheader } from "react-native-material-ui";
+import Home from "./Home";
 
 UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -17,23 +17,20 @@ const uiTheme = {
   }
 };
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
       <ThemeProvider uiTheme={uiTheme}>
-        <View style={styles.container}>
-          <VideoList />
-        </View>
+        <NavigatorIOS
+          initialRoute={{
+            component: Home,
+            title: "DTube"
+          }}
+          style={{ flex: 1 }}
+        />
       </ThemeProvider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+const styles = StyleSheet.create({});
