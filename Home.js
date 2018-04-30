@@ -10,22 +10,26 @@ export default class App extends Component {
 
     this.state = {
       trending: [],
-      loadingData: true,
+      hot: [],
+      newTopic: [],
+      loadingTrending: true,
+      loadingHot: true,
+      loadingNew: true,
       sections: [
-        { id: "subscribed", title: "Subscribed Feed" },
+        //{ id: "subscribed", title: "Subscribed Feed" },
         { id: "hot", title: "Hot Videos" },
         { id: "trending", title: "Trending Videos" },
-        { id: "new", title: "New Videos" },
-        { id: "watchAgain", title: "Watch Again" }
+        { id: "new", title: "New Videos" }
+        //{ id: "watchAgain", title: "Watch Again" }
       ]
     };
 
     this.loadTrending();
+    this.loadHot();
+    this.loadNew();
   }
 
   loadTrending = () => {
-    const { trending } = this.state;
-
     Feed.getTrending(5)
       .then(
         discussions => {
@@ -36,31 +40,79 @@ export default class App extends Component {
         }
       )
       .then(() => {
-        this.setState({ loadingData: false });
+        this.setState({ loadingTrending: false });
+      });
+  };
+
+  loadHot = () => {
+    Feed.getHot(5)
+      .then(
+        discussions => {
+          this.setState({ hot: discussions });
+        },
+        error => {
+          console.log("Error: " + error);
+        }
+      )
+      .then(() => {
+        this.setState({ loadingHot: false });
+      });
+  };
+
+  loadNew = () => {
+    Feed.getNew(5)
+      .then(
+        discussions => {
+          this.setState({ newTopic: discussions });
+        },
+        error => {
+          console.log("Error: " + error);
+        }
+      )
+      .then(() => {
+        this.setState({ loadingHot: false });
       });
   };
 
   renderRow = row => {
-    const { trending } = this.state;
-    const { navigator } = this.props;
+    const { trending, hot, newTopic } = this.state;
+    const { navigator, ...rest } = this.props;
+    var data;
+
+    switch (row.item.id) {
+      case "trending":
+        data = trending;
+        break;
+
+      case "new":
+        data = newTopic;
+        break;
+
+      case "hot":
+        data = hot;
+        break;
+
+      default:
+        data = trending;
+    }
 
     return (
       <View style={styles.section}>
         <Subheader text={row.item.title} />
-        <VideoList data={trending} navigator={navigator} />
+        <VideoList data={data} navigator={navigator} {...rest} />
       </View>
     );
   };
 
   render() {
-    const { sections, loadingData } = this.state;
+    const { sections, loadingTrending, loadingHot, loadingNew } = this.state;
     const { renderRow } = this;
 
     return (
       <View style={styles.container}>
         <Text />
         <FlatList
-          refreshing={loadingData}
+          refreshing={loadingTrending || loadingHot}
           data={sections}
           horizontal={false}
           keyExtractor={row => {

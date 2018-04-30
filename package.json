@@ -12,11 +12,16 @@
     "dsteem": "^0.8.7",
     "events": "^2.0.0",
     "main": "^1.0.1",
+    "moment": "^2.22.1",
     "promise": "^8.0.1",
     "react": "16.3.1",
     "react-native": "0.55.3",
+    "react-native-af-video-player": "^0.1.9",
+    "react-native-comments": "^1.0.20",
+    "react-native-hyperlink": "^0.0.13",
     "react-native-material-ui": "^1.22.2",
-    "react-native-vector-icons": "^4.6.0"
+    "react-native-vector-icons": "^4.6.0",
+    "react-native-video": "^2.0.0"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",

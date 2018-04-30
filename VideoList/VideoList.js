@@ -4,9 +4,9 @@ import VideoListRow from "./VideoListRow";
 
 export default class App extends Component {
   renderRow = ({ item }) => {
-    const { navigator } = this.props;
+    const { navigator, ...rest } = this.props;
 
-    return <VideoListRow {...item} navigator={navigator} />;
+    return <VideoListRow {...item} {...rest} navigator={navigator} />;
   };
 
   render() {
@@ -19,11 +19,7 @@ export default class App extends Component {
           data={data}
           horizontal={true}
           keyExtractor={row => {
-            return (
-              (row.video ? row.video.info.permlink : row.links[0]) +
-              "." +
-              new Date().getTime()
-            );
+            return row.video ? row.video.info.permlink : null;
           }}
           renderItem={renderRow}
         />

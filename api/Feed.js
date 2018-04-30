@@ -11,25 +11,57 @@ var querry = {
 };
 
 const getTrending = limit => {
-  return !isConnected
-    ? new Promise(function(resolve, reject) {
-        resolve(require("../videoSample.json"));
-      })
-    : client.database
-        .getDiscussions("trending", {
-          tag: "dtube",
-          limit: limit || 1
-        })
-        .then(
-          discussions => {
-            return discussions.map(row => {
-              return JSON.parse(row.json_metadata);
-            });
-          },
-          error => {
-            console.log("error" + error);
-          }
-        );
+  return client.database
+    .getDiscussions("trending", {
+      tag: "dtube",
+      limit: limit || 1
+    })
+    .then(
+      discussions => {
+        return discussions.map(row => {
+          return JSON.parse(row.json_metadata);
+        });
+      },
+      error => {
+        console.log("error" + error);
+      }
+    );
 };
 
-export default { getTrending };
+const getHot = limit => {
+  return client.database
+    .getDiscussions("hot", {
+      tag: "dtube",
+      limit: limit || 1
+    })
+    .then(
+      discussions => {
+        return discussions.map(row => {
+          return JSON.parse(row.json_metadata);
+        });
+      },
+      error => {
+        console.log("error" + error);
+      }
+    );
+};
+
+const getNew = limit => {
+  return client.database
+    .getDiscussions("created", {
+      tag: "dtube",
+      limit: limit || 1
+    })
+    .then(
+      discussions => {
+        return discussions.map(row => {
+          return JSON.parse(row.json_metadata);
+        });
+      },
+      error => {
+        console.log("error" + error);
+      }
+    );
+};
+
+export default { getTrending, getHot, getNew };

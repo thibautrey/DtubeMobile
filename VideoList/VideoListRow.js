@@ -12,12 +12,12 @@ import { Video } from "../Video";
 
 export default class App extends Component {
   goToVideo = () => {
-    const { video, navigator } = this.props;
+    const { video, navigator, toggleNavigationBar } = this.props;
 
     navigator.push({
       title: video.info.title,
       component: Video,
-      passProps: { video: video }
+      passProps: { video: video, toggleNavigationBar: toggleNavigationBar }
     });
   };
 
@@ -25,7 +25,10 @@ export default class App extends Component {
     const { video, image } = this.props;
 
     return (
-      <TouchableHighlight onPress={() => this.goToVideo()}>
+      <TouchableHighlight
+        underlayColor={"white"}
+        onPress={() => this.goToVideo()}
+      >
         <View style={styles.container}>
           {video ? (
             video.info ? (

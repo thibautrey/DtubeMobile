@@ -18,13 +18,30 @@ const uiTheme = {
 };
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      navigationBarHidden: false
+    };
+  }
+
+  toggleNavigationBar = () => {
+    this.setState({ navigationBarHidden: !this.state.navigationBarHidden });
+  };
+
   render() {
+    const { navigationBarHidden } = this.state;
+    const { toggleNavigationBar } = this;
+
     return (
       <ThemeProvider uiTheme={uiTheme}>
         <NavigatorIOS
           initialRoute={{
             component: Home,
-            title: "DTube"
+            title: "DTube",
+            navigationBarHidden: navigationBarHidden,
+            passProps: { toggleNavigationBar: toggleNavigationBar }
           }}
           style={{ flex: 1 }}
         />
